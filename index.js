@@ -45,6 +45,7 @@ app.use(cors()); // Для дозволу CORS
 app.use(express.json()); // Для роботи з JSON даними
 app.use(helmet()); // Для підвищення безпеки
 app.use("/uploads", express.static("uploads"));
+app.use(express.static("public"));
 
 // Налаштовуємо сховище для завантажуваних файлів за допомогою multer
 const storage = multer.diskStorage({
