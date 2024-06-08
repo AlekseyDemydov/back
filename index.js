@@ -24,9 +24,9 @@ import {
 
 // Імпортуємо функцію перевірки автентифікації
 import checkAuth from "./utils/checkAuth.js";
-
+// "mongodb+srv://DemFam:demfam@cluster0.ldq86j4.mongodb.net/ElfBar?retryWrites=true&w=majority"
 // Підключаємось до бази даних MongoDB
-mongoose.connect("mongodb+srv://DemFam:demfam@cluster0.ldq86j4.mongodb.net/ElfBar?retryWrites=true&w=majority")
+mongoose.connect(process.env.MONGODB-URI)
   .then(() => console.log("DB connected"))
   .catch((err) => console.error("DB connection error", err));
 
