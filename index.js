@@ -101,9 +101,12 @@ app.use((err, req, res, next) => {
 });
 
 // Порт, на якому запускається сервер
-const PORT = process.env.PORT || 4444;
+// const PORT = process.env.PORT || 4444;
 
 // Прослуховуємо порт та виводимо повідомлення про запуск сервера
-app.listen(PORT, () => {
+app.listen(process.env.PORT || 4444, (err) => {
+  if(err){
+    return console.log(err)
+  }
   console.log(`Server is running on port ${PORT}`);
 });
