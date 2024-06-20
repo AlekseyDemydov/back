@@ -25,8 +25,8 @@ import {
 
 
 // Підключаємось до бази даних MongoDB
-mongoose.connect("mongodb+srv://DemFam:demfam@cluster0.olmmyzl.mongodb.net/ElfBar?retryWrites=true&w=majority")
-// mongoose.connect(process.env.MONGODB_URI)
+// mongoose.connect("mongodb+srv://DemFam:demfam@cluster0.olmmyzl.mongodb.net/ElfBar?retryWrites=true&w=majority")
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("DB connected"))
   .catch((err) => console.error("DB connection error", err));
 
