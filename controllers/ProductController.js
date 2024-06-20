@@ -3,11 +3,12 @@ import Product from '../models/Product.js'; // Імпортуємо модель
 // Контролер для створення нового продукту
 export const createProduct = async (req, res) => {
   try {
-    const { name, flavor, description, price, imageUrl } = req.body;
+    const { name, flavor, color, description, price, imageUrl } = req.body;
 
     const product = new Product({
       name,
       flavor,
+      color,
       description,
       price,
       imageUrl,

@@ -37,17 +37,16 @@ const ProductSchema = new Schema({
     trim: true,
   },
   description: {
-    type: DescriptionSchema, // Використовуємо створену схему DescriptionSchema
-    // required: true,
+    type: DescriptionSchema,
+  
   },
   flavor: {
     type: [String],
-    // validate: {
-    //   validator: function(v) {
-    //     return v.length > 0;
-    //   },
-    //   message: "Flavor cannot be empty"
-    // },
+   
+  },
+  color: {
+    type: [String],
+   
   },
   price: {
     type: Number,
