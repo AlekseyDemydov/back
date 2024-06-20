@@ -1,15 +1,17 @@
-// Імпортуємо необхідні модулі і бібліотеки
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import helmet from "helmet";
-import multer from "multer"; // Для обробки завантаження файлів
+import multer from "multer";
 
 // Імпортуємо моделі користувачів, продуктів і замовлень
-import { User, Product } from "./models/index.js";
+import { User, Product, Feedback } from "./models/index.js";
 
 // Імпортуємо контролери для роботи з роутами
 import {
+  createFeedback,
+  getAllFeedbacks,
+  deleteFeedback,
   getMyProfile,
   updateMyProfile,
   register,
@@ -19,7 +21,7 @@ import {
   getOneProduct,
   deleteProduct,
   updateProduct,
-  getMe
+  getMe,
 } from "./controllers/index.js";
 
 // Імпортуємо функцію перевірки автентифікації
@@ -39,13 +41,11 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // Використовуємо middlewares для Express
 app.use(cors()); // Для дозволу CORS
 app.use(express.json()); // Для роботи з JSON даними
 app.use(helmet()); // Для підвищення безпеки
 app.use("/uploads", express.static("uploads"));
-app.use(express.static("public"));
 
 // Налаштовуємо сховище для завантажуваних файлів за допомогою multer
 const storage = multer.diskStorage({
@@ -56,7 +56,6 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-
 
 // Налаштовуємо multer з нашою конфігурацією сховища
 const upload = multer({ storage });
@@ -71,7 +70,7 @@ app.post("/upload", upload.single("image"), (req, res) => {
 // Додаємо моделі до контексту додатку Express
 app.set('UserModel', User);
 app.set('ProductModel', Product);
-
+app.set('FeedbackModel', Feedback);
 
 // Маршрути для реєстрації та входу користувача
 app.post("/auth/register", register);
@@ -80,8 +79,6 @@ app.get("/me", checkAuth, getMe);
 app.get("/profile", checkAuth, getMyProfile);
 app.put("/profile", checkAuth, updateMyProfile);
 
-
-
 // Маршрути для отримання всіх продуктів, отримання одного продукту та створення нового продукту
 app.get("/products", getAllProducts);
 app.get("/products/:id", getOneProduct);
@@ -89,6 +86,10 @@ app.post("/products", createProduct);
 app.delete("/products/:id", deleteProduct);
 app.put("/products/:id", updateProduct);
 
+// Маршрути для отримання всіх відгуків
+app.get("/feedback", getAllFeedbacks);
+app.post("/feedback", createFeedback);
+app.delete("/feedback/:id", deleteFeedback);
 
 // Маршрут, що викликається, якщо запит не знайдено
 app.use((req, res, next) => {
@@ -105,9 +106,6 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 4444;
 
 // Прослуховуємо порт та виводимо повідомлення про запуск сервера
-app.listen(process.env.PORT || 4444, (err) => {
-  if(err){
-    return console.log(err)
-  }
+app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
