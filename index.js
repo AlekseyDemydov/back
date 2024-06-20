@@ -12,25 +12,21 @@ import {
   createFeedback,
   getAllFeedbacks,
   deleteFeedback,
-  getMyProfile,
-  updateMyProfile,
-  register,
-  login,
   createProduct,
   getAllProducts,
   getOneProduct,
   deleteProduct,
   updateProduct,
   getMe,
+  createUser,
 } from "./controllers/index.js";
 
 // Імпортуємо функцію перевірки автентифікації
-import checkAuth from "./utils/checkAuth.js";
+
 
 // Підключаємось до бази даних MongoDB
-// mongoose.connect("mongodb+srv://DemFam:demfam@cluster0.olmmyzl.mongodb.net/ElfBar?retryWrites=true&w=majority")
-mongoose
-.connect(process.env.MONGODB_URI)
+mongoose.connect("mongodb+srv://DemFam:demfam@cluster0.olmmyzl.mongodb.net/ElfBar?retryWrites=true&w=majority")
+// mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("DB connected"))
   .catch((err) => console.error("DB connection error", err));
 
@@ -75,11 +71,10 @@ app.set('ProductModel', Product);
 app.set('FeedbackModel', Feedback);
 
 // Маршрути для реєстрації та входу користувача
-app.post("/auth/register", register);
-app.post("/auth/login", login);
-app.get("/me", checkAuth, getMe);
-app.get("/profile", checkAuth, getMyProfile);
-app.put("/profile", checkAuth, updateMyProfile);
+
+app.get("/me", getMe);
+app.post("/me",createUser);
+
 
 // Маршрути для отримання всіх продуктів, отримання одного продукту та створення нового продукту
 app.get("/products", getAllProducts);
