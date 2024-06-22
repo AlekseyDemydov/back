@@ -16,8 +16,8 @@ const DescriptionSchema = new Schema({
     trim: true,
   },
   resistance: {
-    type: String,
-    trim: true,
+    type: [String],
+   
   },
   type: {
     type: String,
