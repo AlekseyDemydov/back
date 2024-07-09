@@ -64,10 +64,15 @@ const upload = multer({ storage });
 
 // Надаємо доступ до статичних файлів у папці "uploads"
 app.post("/upload", upload.single("image"), (req, res) => {
+  console.log(req.file); // Перевіряємо, що ми отримали файл
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
   res.json({
     url: `/uploads/${req.file.originalname}`,
   });
 });
+
 
 // Додаємо моделі до контексту додатку Express
 app.set('UserModel', User);
