@@ -33,7 +33,7 @@ mongoose.connect(process.env.MONGODB_URI)
 // Створюємо екземпляр додатку Express
 const app = express();
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "https://elfbarr-4c4d6b59a57a.herokuapp.com");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
@@ -41,7 +41,7 @@ app.use((req, res, next) => {
 
 // Використовуємо middlewares для Express
 app.use(cors({
-  origin: '*', // дозволяємо доступ з будь-якого джерела
+  origin: 'https://elfbarr-4c4d6b59a57a.herokuapp.com', // дозволяємо доступ з будь-якого джерела
   methods: 'GET, POST, PUT, DELETE', // дозволяємо ці HTTP-методи
   allowedHeaders: 'Content-Type, Authorization' // дозволяємо ці HTTP-заголовки
 }));
