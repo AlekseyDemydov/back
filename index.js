@@ -41,7 +41,7 @@ app.use((req, res, next) => {
 
 // Використовуємо middlewares для Express
 app.use(cors({
-  origin: 'https://elfbarr-4fdc9b0d9aee.herokuapp.com', // Змініть на своє джерело
+  origin: 'https://cloud-crafters.com.ua', // Змініть на своє джерело
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
