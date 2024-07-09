@@ -40,7 +40,14 @@ app.use((req, res, next) => {
 });
 
 // Використовуємо middlewares для Express
-app.use(cors()); // Для дозволу CORS
+const cors = require('cors');
+
+// Add this before defining your routes
+app.use(cors({
+  origin: 'https://cloud-crafters.com.ua',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(express.json()); // Для роботи з JSON даними
 app.use(helmet()); // Для підвищення безпеки
 app.use("/uploads", express.static("uploads"));
