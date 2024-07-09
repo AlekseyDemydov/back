@@ -41,7 +41,7 @@ app.use((req, res, next) => {
 
 // Використовуємо middlewares для Express
 app.use(cors({
-  origin: '*', // Дозволяє усім джерелам
+  origin: 'https://cloud-crafters.com.ua',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
