@@ -40,21 +40,12 @@ app.use((req, res, next) => {
 });
 
 // Використовуємо middlewares для Express
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+app.use(cors());
 app.use(express.json()); // Для роботи з JSON даними
 app.use(helmet()); // Для підвищення безпеки
 app.use("/uploads", express.static("uploads"));
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
+
 // Налаштовуємо сховище для завантажуваних файлів за допомогою multer
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
