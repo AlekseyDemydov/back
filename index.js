@@ -63,7 +63,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Надаємо доступ до статичних файлів у папці "uploads"
-app.post("https://elfbarr-112a99c70c1d.herokuapp.com/upload", upload.single("image"), (req, res) => {
+app.post("/upload", upload.single("image"), (req, res) => {
   res.json({
     url: `/uploads/${req.file.originalname}`,
   });
