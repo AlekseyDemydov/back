@@ -25,7 +25,7 @@ import {
 
 
 // Підключаємось до бази даних MongoDB
-// mongoose.connect("mongodb+srv://admin:Q804479q@@cluster0.olmmyzl.mongodb.net/ElfBar?retryWrites=true&w=majority")
+// mongoose.connect("mongodb+srv://ADministartor:jpUnrAK80ITx0A30@clusterelf.n3cs9ie.mongodb.net/ElfBar?retryWrites=true&w=majority")
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("DB connected"))
   .catch((err) => console.error("DB connection error", err));
@@ -63,7 +63,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Надаємо доступ до статичних файлів у папці "uploads"
-app.post("/upload", upload.single("image"), (req, res) => {
+app.post("https://elfbarr-112a99c70c1d.herokuapp.com/upload", upload.single("image"), (req, res) => {
   res.json({
     url: `/uploads/${req.file.originalname}`,
   });
