@@ -33,22 +33,17 @@ mongoose.connect(process.env.MONGODB_URI)
 // Створюємо екземпляр додатку Express
 const app = express();
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://cloud-crafters.com.ua");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
 
 // Використовуємо middlewares для Express
-app.use(cors({
-  origin: 'https://cloud-crafters.com.ua', // дозволяємо доступ з будь-якого джерела
-  methods: 'GET, POST, PUT, DELETE', // дозволяємо ці HTTP-методи
-  allowedHeaders: 'Content-Type, Authorization' // дозволяємо ці HTTP-заголовки
-}));
+app.use(cors()); // Для дозволу CORS
 app.use(express.json()); // Для роботи з JSON даними
 app.use(helmet()); // Для підвищення безпеки
 app.use("/uploads", express.static("uploads"));
-
 
 // Налаштовуємо сховище для завантажуваних файлів за допомогою multer
 const storage = multer.diskStorage({
@@ -65,15 +60,10 @@ const upload = multer({ storage });
 
 // Надаємо доступ до статичних файлів у папці "uploads"
 app.post("/upload", upload.single("image"), (req, res) => {
-  console.log(req.file); // Перевіряємо, що ми отримали файл
-  if (!req.file) {
-    return res.status(400).json({ message: "No file uploaded" });
-  }
   res.json({
     url: `/uploads/${req.file.originalname}`,
   });
 });
-
 
 // Додаємо моделі до контексту додатку Express
 app.set('UserModel', User);
