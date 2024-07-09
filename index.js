@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 });
 
 // Використовуємо middlewares для Express
-const cors = require('cors');
+
 
 // Add this before defining your routes
 app.use(cors({
