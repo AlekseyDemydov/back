@@ -32,7 +32,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // Створюємо екземпляр додатку Express
 const app = express();
-const allowedOrigin = process.env.FRONTEND_URL || "https://elfbarr-64fed43ca1d5.herokuapp.com";
+const allowedOrigin = process.env.FRONTEND_URL || "https://cloud-crafters.com.ua";
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
