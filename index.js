@@ -35,7 +35,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 // Створюємо екземпляр додатку Express
 const app = express();
-const allowedOrigin = process.env.FRONTEND_URL || "https://cloud-crafters.com.ua";
+const allowedOrigin = process.env.FRONTEND_URL || "https://elfbarr-64fed43ca1d5.herokuapp.com";
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
@@ -53,7 +53,12 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(helmet());
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", (req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+}, express.static("uploads"));
 
 // Перевірка і створення папки для завантажень
 const uploadPath = 'uploads';
