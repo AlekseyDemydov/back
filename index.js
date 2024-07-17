@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import cors from "cors";
 import helmet from "helmet";
 import multer from "multer";
+import dotenv from "dotenv";
+import fs from "fs";
+// import path from "path";
 
 // Імпортуємо моделі користувачів, продуктів і замовлень
 import { User, Product, Feedback } from "./models/index.js";
@@ -21,12 +24,12 @@ import {
   createUser,
 } from "./controllers/index.js";
 
-// Імпортуємо функцію перевірки автентифікації
-
+// Налаштовуємо змінні середовища
+dotenv.config();
 
 // Підключаємось до бази даних MongoDB
 // mongoose.connect("mongodb+srv://ADministartor:jpUnrAK80ITx0A30@clusterelf.n3cs9ie.mongodb.net/ElfBar?retryWrites=true&w=majority")
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("DB connected"))
   .catch((err) => console.error("DB connection error", err));
 
@@ -42,28 +45,30 @@ app.use((req, res, next) => {
 });
 
 // Використовуємо middlewares для Express
-
-
-// Add this before defining your routes
 app.use(cors());
-app.use(express.json()); // Для роботи з JSON даними
-app.use(helmet()); // Для підвищення безпеки
+app.use(express.json());
+app.use(helmet());
 app.use("/uploads", express.static("uploads"));
+
+// Перевірка і створення папки для завантажень
+const uploadPath = 'uploads';
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath);
+}
 
 // Налаштовуємо сховище для завантажуваних файлів за допомогою multer
 const storage = multer.diskStorage({
-  destination: (_, __, cb) => {
-    cb(null, "uploads");
+  destination: (req, file, cb) => {
+    cb(null, uploadPath);
   },
-  filename: (_, file, cb) => {
+  filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
 });
 
-// Налаштовуємо multer з нашою конфігурацією сховища
 const upload = multer({ storage });
 
-// Надаємо доступ до статичних файлів у папці "uploads"
+// Маршрут для завантаження файлів
 app.post("/upload", upload.single("image"), (req, res) => {
   res.json({
     url: `/uploads/${req.file.originalname}`,
@@ -75,20 +80,18 @@ app.set('UserModel', User);
 app.set('ProductModel', Product);
 app.set('FeedbackModel', Feedback);
 
-// Маршрути для реєстрації та входу користувача
-
+// Маршрути для користувачів
 app.get("/me", getMe);
-app.post("/me",createUser);
+app.post("/me", createUser);
 
-
-// Маршрути для отримання всіх продуктів, отримання одного продукту та створення нового продукту
+// Маршрути для продуктів
 app.get("/products", getAllProducts);
 app.get("/products/:id", getOneProduct);
 app.post("/products", createProduct);
 app.delete("/products/:id", deleteProduct);
 app.put("/products/:id", updateProduct);
 
-// Маршрути для отримання всіх відгуків
+// Маршрути для відгуків
 app.get("/feedback", getAllFeedbacks);
 app.post("/feedback", createFeedback);
 app.delete("/feedback/:id", deleteFeedback);
