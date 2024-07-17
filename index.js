@@ -46,12 +46,7 @@ app.use((req, res, next) => {
 });
 
 // Використовуємо middlewares для Express
-app.use(cors({
-  origin: allowedOrigin,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use("/uploads", (req, res, next) => {
