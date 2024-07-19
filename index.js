@@ -5,7 +5,7 @@ import helmet from "helmet";
 import multer from "multer";
 import dotenv from "dotenv";
 import fs from "fs";
-// import path from "path";
+import path from "path";
 
 // Імпортуємо моделі користувачів, продуктів і замовлень
 import { User, Product, Feedback } from "./models/index.js";
@@ -51,12 +51,17 @@ app.use(express.json()); // Для роботи з JSON даними
 app.use(helmet()); // Для підвищення безпеки
 app.use("/uploads", express.static("uploads"));
 
+// Переконайтеся, що директорія 'uploads' існує
+const uploadDir = path.join(__dirname, 'uploads');
 
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 
 // Налаштовуємо сховище для завантажуваних файлів за допомогою multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads");
+    cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
