@@ -6,6 +6,7 @@ import multer from "multer";
 import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from 'url';
 
 // Імпортуємо моделі користувачів, продуктів і замовлень
 import { User, Product, Feedback } from "./models/index.js";
@@ -28,6 +29,7 @@ import {
 dotenv.config();
 
 // Підключаємось до бази даних MongoDB
+
 // mongoose.connect("mongodb+srv://ADministartor:jpUnrAK80ITx0A30@clusterelf.n3cs9ie.mongodb.net/ElfBar?retryWrites=true&w=majority")
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("DB connected"))
@@ -52,6 +54,8 @@ app.use(helmet()); // Для підвищення безпеки
 app.use("/uploads", express.static("uploads"));
 
 // Переконайтеся, що директорія 'uploads' існує
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const uploadDir = path.join(__dirname, 'uploads');
 
 if (!fs.existsSync(uploadDir)) {
