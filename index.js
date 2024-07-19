@@ -46,26 +46,17 @@ app.use((req, res, next) => {
 });
 
 // Використовуємо middlewares для Express
-app.use(cors());
-app.use(express.json());
-app.use(helmet());
-app.use("/uploads", (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-}, express.static("uploads"));
+app.use(cors()); // Для дозволу CORS
+app.use(express.json()); // Для роботи з JSON даними
+app.use(helmet()); // Для підвищення безпеки
+app.use("/uploads", express.static("uploads"));
 
-// Перевірка і створення папки для завантажень
-const uploadPath = 'uploads';
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath);
-}
+
 
 // Налаштовуємо сховище для завантажуваних файлів за допомогою multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, uploadPath);
+    cb(null, "uploads");
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
