@@ -4,7 +4,7 @@ import cors from "cors";
 import helmet from "helmet";
 import multer from "multer";
 import dotenv from "dotenv";
-import https from 'https';
+// import https from 'https';
 import http from 'http';
 import fs from "fs";
 import path from "path";
@@ -30,6 +30,8 @@ import {
 // Налаштовуємо змінні середовища
 dotenv.config();
 
+
+
 // Підключаємось до бази даних MongoDB
 
 mongoose.connect("mongodb+srv://ADministartor:jpUnrAK80ITx0A30@clusterelf.n3cs9ie.mongodb.net/ElfBar?retryWrites=true&w=majority")
@@ -39,15 +41,16 @@ mongoose.connect("mongodb+srv://ADministartor:jpUnrAK80ITx0A30@clusterelf.n3cs9i
 
 // Створюємо екземпляр додатку Express
 const app = express();
-const allowedOrigin = "https://cloud-crafters.com.ua" || "http://localhost:3000";
+// const allowedOrigin = "https://cloud-crafters.com.ua" || "http://localhost:3000";
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
   res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
+
 
 // Використовуємо middlewares для Express
 app.use(cors()); // Для дозволу CORS
@@ -115,23 +118,11 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Internal Server Error" });
 });
 
-// Порт, на якому запускається сервер
-const PORT = process.env.PORT || 4444;
 
-// Прослуховуємо порт та виводимо повідомлення про запуск сервера
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
-// app.listen(process.env.PORT, process.env.HOST);
 
 
 // Запускаємо сервер на HTTPS
-https.createServer( app).listen(process.env.PORT, process.env.HOST, () => {
+http.createServer(app).listen(process.env.PORT, process.env.HOST, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
-// const PORT = process.env.PORT || 4444;
-// Для локальної розробки можна використовувати HTTP
-const LOCAL_PORT = 4444;
-app.listen(LOCAL_PORT, () => {
-  console.log(`Server is running on port ${LOCAL_PORT}`);
-});
+
