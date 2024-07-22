@@ -39,7 +39,7 @@ mongoose.connect("mongodb+srv://ADministartor:jpUnrAK80ITx0A30@clusterelf.n3cs9i
 
 // Створюємо екземпляр додатку Express
 const app = express();
-const allowedOrigin = process.env.FRONTEND_URL || "http://localhost:3000";
+const allowedOrigin = "https://cloud-crafters.com.ua" || "http://localhost:3000";
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
