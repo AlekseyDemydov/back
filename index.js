@@ -30,8 +30,8 @@ dotenv.config();
 
 // Підключаємось до бази даних MongoDB
 
-// mongoose.connect("mongodb+srv://ADministartor:jpUnrAK80ITx0A30@clusterelf.n3cs9ie.mongodb.net/ElfBar?retryWrites=true&w=majority")
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect("mongodb+srv://ADministartor:jpUnrAK80ITx0A30@clusterelf.n3cs9ie.mongodb.net/ElfBar?retryWrites=true&w=majority")
+// mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("DB connected"))
   .catch((err) => console.error("DB connection error", err));
 
@@ -117,6 +117,7 @@ app.use((err, req, res, next) => {
 // const PORT = process.env.PORT || 4444;
 
 // Прослуховуємо порт та виводимо повідомлення про запуск сервера
-app.listen(process.env.PORT, process.env.HOST, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
+app.listen(process.env.PORT, process.env.HOST);
