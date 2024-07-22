@@ -4,6 +4,8 @@ import cors from "cors";
 import helmet from "helmet";
 import multer from "multer";
 import dotenv from "dotenv";
+import https from 'https';
+import http from 'http';
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from 'url';
@@ -114,10 +116,22 @@ app.use((err, req, res, next) => {
 });
 
 // Порт, на якому запускається сервер
-// const PORT = process.env.PORT || 4444;
+const PORT = process.env.PORT || 4444;
 
 // Прослуховуємо порт та виводимо повідомлення про запуск сервера
 // app.listen(PORT, () => {
 //   console.log(`Server is running on port ${PORT}`);
 // });
-app.listen(process.env.PORT, process.env.HOST);
+// app.listen(process.env.PORT, process.env.HOST);
+
+
+// Запускаємо сервер на HTTPS
+https.createServer( app).listen(process.env.PORT, process.env.HOST, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
+});
+// const PORT = process.env.PORT || 4444;
+// Для локальної розробки можна використовувати HTTP
+const LOCAL_PORT = 4444;
+app.listen(LOCAL_PORT, () => {
+  console.log(`Server is running on port ${LOCAL_PORT}`);
+});
