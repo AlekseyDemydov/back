@@ -53,7 +53,9 @@ app.use((req, res, next) => {
 
 
 // Використовуємо middlewares для Express
-app.use(cors()); // Для дозволу CORS
+app.use(cors({
+  origin: 'https://elfbar.website'
+})); // Для дозволу CORS
 app.use(express.json()); // Для роботи з JSON даними
 app.use(helmet()); // Для підвищення безпеки
 app.use("/uploads", express.static("uploads"));
