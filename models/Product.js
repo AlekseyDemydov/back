@@ -57,6 +57,10 @@ const ProductSchema = new Schema({
     type: String,
     trim: true,
   },
+  disText: {
+    type: String,
+    trim: true,
+  },
 }, {
   timestamps: true,
 });
