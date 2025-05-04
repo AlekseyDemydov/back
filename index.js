@@ -44,18 +44,16 @@ const app = express();
 // const allowedOrigin = "https://cloud-crafters.com.ua" || "http://localhost:3000";
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader("Access-Control-Allow-Origin", "https://cloud-crafters.com.ua"); // Вкажи свій фронтенд-домен
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Requested-With");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   next();
 });
 
 
 // Використовуємо middlewares для Express
-app.use(cors({
-  origin: 'https://elfbar.website'
-})); // Для дозволу CORS
+app.use(cors()); // Для дозволу CORS
 app.use(express.json()); // Для роботи з JSON даними
 app.use(helmet()); // Для підвищення безпеки
 app.use("/uploads", express.static("uploads"));
